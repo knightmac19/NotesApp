@@ -1,15 +1,15 @@
-const path = require('path');
 const router = require('express').Router();
-const notesArray = require('../db/db.json');
+const store = require('../db/store');
 
 router.get('/notes', (req, res) => {
-    return res.json(notesArray);
-});
-
-router.post('/notes', (req, res) => {
-    let newNote = req.body;
-    notesArray.push(newNote);
-    res.json();
+    store.returnAll()
+    .then((notes) => {
+        return res.json(notes);
+    })
+    .catch((err) => {
+        console.log(err)
+    })
+    
 });
 
 
