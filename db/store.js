@@ -29,7 +29,7 @@ const returnAll = () => {
             console.log(err)
         }
 
-        console.log(parsedNotes)
+        // console.log(parsedNotes)
         return parsedNotes;
     });
 }
@@ -40,7 +40,7 @@ const createNote = note => {
     };
 
     let newNote = { ...note, id: uuidv4() };
-    returnAll()
+    return returnAll()
         .then(notes => {
             return [ ...notes, newNote ];
         })
@@ -52,10 +52,24 @@ const createNote = note => {
         })
 }
 
+const deleteOne = (id) => {
+    
+    return returnAll()
+        .then(notes => {
+            return notes.filter(note => {
+                return note.id !== id
+            });
+        })
+        .then(newArray => {
+            writeNewFile(newArray)
+        })
+        // .then(location.reload())
+}
 
 module.exports = {
     readAll: readAll,
     writeNewFile: writeNewFile,
     returnAll: returnAll,
-    createNote: createNote
+    createNote: createNote,
+    deleteOne: deleteOne
 }
